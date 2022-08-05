@@ -100,7 +100,7 @@ const allowSave = computed(() => {
 
     <tbody>
       <tr v-if="transactions.length" v-for="tx in transactions">
-        <td>{{ tx.timestamp?.toLocaleTimeString() }}</td>
+        <td>{{ tx.timestamp }}</td>
         <td>{{ tx.label }}</td>
         <td>{{ tx.type == TransactionType.INCOME ? "In" : "Out" }}</td>
         <td>PHP {{ tx.amount.toLocaleString() }}</td>

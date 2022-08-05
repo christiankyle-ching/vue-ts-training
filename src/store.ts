@@ -1,21 +1,27 @@
-import { reactive } from "vue";
+import { reactive, watchEffect } from "vue";
 import { TransactionType, type Account, type Transaction } from "@/models";
 
-// interface AppState {
-//     accounts: Account[],
-//     addAccount(account: Account): void,
-//     editAccount(account: Account): void,
-//     deleteAccount(account: Account): void,
-//
-//     // Transactions
-//     transactions: { [key: string]: Transaction[] }
-//     getTransactionByDate: (date: Date) => Transaction[],
-//     addTransaction: (tx: Transaction, date: Date) => void,
-// }
+interface AppState {
+  accounts: Account[];
 
-const store = reactive({
+  // Transactions
+  transactions: { [key: string]: Transaction[] };
+}
+
+const DEFAULT_STATE: AppState = {
   // Accounts
   accounts: [] as Account[],
+
+  // Transactions
+  transactions: {} as { [key: string]: Transaction[] },
+};
+
+const STATE = JSON.parse(
+  localStorage.getItem("APP_STATE") ?? JSON.stringify(DEFAULT_STATE)
+);
+
+const STATE_WITH_OPS = {
+  ...(STATE as AppState),
   addAccount(account: Account): void {
     this.accounts.push({
       id: Math.random(),
@@ -35,8 +41,6 @@ const store = reactive({
     }
   },
 
-  // Transactions
-  transactions: {} as { [key: string]: Transaction[] },
   getTransactionByDate(date: Date): Transaction[] {
     const key = _getTxDateKey(date);
 
@@ -65,6 +69,14 @@ const store = reactive({
       account.balance = amountAfter;
     }
   },
+};
+
+console.log(JSON.stringify(STATE_WITH_OPS));
+
+const store = reactive(STATE_WITH_OPS);
+
+watchEffect(() => {
+  localStorage.setItem("APP_STATE", JSON.stringify(store));
 });
 
 function _getTxDateKey(date: Date): string {
