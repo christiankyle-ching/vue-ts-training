@@ -1,0 +1,60 @@
+@import "./base.css";
+
+.container {
+  margin: 0 auto;
+  padding: 1rem;
+  width: 95vw;
+}
+
+.button {
+  border-radius: 1rem;
+  border: 2px solid var(--vt-c-primary-light);
+  padding: 0.75rem;
+  background-color: var(--vt-c-primary);
+  color: var(--vt-c-white);
+  cursor: pointer;
+}
+
+.button:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.button:hover {
+  background-color: var(--vt-c-primary-dark);
+}
+
+.button + .button {
+  margin-left: 0.5rem;
+}
+
+/* Form Inputs */
+form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+input,
+select {
+  border-radius: 1rem;
+  border: 2px solid var(--color-background-mute);
+  padding: 0.75rem;
+  background-color: var(--color-background-soft);
+  color: var(--vt-c-white);
+}
+
+input:read-only {
+  opacity: 0.5;
+}
+
+/* Transitions */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 350ms ease-in-out;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
