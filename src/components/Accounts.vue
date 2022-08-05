@@ -11,25 +11,6 @@ enum ModalAction {
   DELETE,
 }
 
-const addAccount = (account: Account): void => {
-  store.accounts.push({
-    id: Math.random(),
-    ...account,
-  });
-};
-const editAccount = (newAccount: Account): void => {
-  const idx = store.accounts.findIndex((a: Account) => a.id === newAccount.id);
-  store.accounts[idx] = newAccount;
-};
-const deleteAccount = (account: Account): void => {
-  const idx = store.accounts.findIndex((a: Account) => a.id === account.id);
-  if (idx >= 0) {
-    store.accounts.splice(idx, 1);
-  } else {
-    throw "";
-  }
-};
-
 // Opening modals
 const onAddAccount = () => {
   selectedAccount.value = {
@@ -55,13 +36,13 @@ const onDeleteAccount = (account: Account) => {
 const onSubmitAccountModal = () => {
   switch (accountModalAction.value) {
     case ModalAction.ADD:
-      addAccount(selectedAccount.value);
+      store.addAccount(selectedAccount.value);
       break;
     case ModalAction.EDIT:
-      editAccount(selectedAccount.value);
+      store.editAccount(selectedAccount.value);
       break;
     case ModalAction.DELETE:
-      deleteAccount(selectedAccount.value);
+      store.deleteAccount(selectedAccount.value);
       break;
   }
 
